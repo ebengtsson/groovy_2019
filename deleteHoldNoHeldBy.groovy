@@ -1,3 +1,4 @@
+//made from https://github.com/libris/librisxl/blob/develop/whelktool/scripts/examples/deletebyid.groovy
 selectByIds([
     'https://libris.kb.se/v4jr10lmsswpjjmx',
     'https://libris.kb.se/v4jr1t73stt9m2gt',
