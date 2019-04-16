@@ -1,6 +1,6 @@
 
 /*
- * This deletes holdings for Bokr.
+ * This deletes holdings for BOKR
  *
  * See LXL-XXXX for more info.
  *
