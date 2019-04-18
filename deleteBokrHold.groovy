@@ -6,7 +6,7 @@
  *
  */
 String SIGEL_TO_DELETE = 'BOKR'
-String BIB_ID_FILE = 'BOKRhold-ids.txt'
+String BIB_ID_FILE = 'lxl-2380_bokr_hold.txt'
 
 PrintWriter failedHoldIDs = getReportWriter("failed-to-delete-holdIDs")
 PrintWriter scheduledForDeletion = getReportWriter("scheduled-for-deletion")
