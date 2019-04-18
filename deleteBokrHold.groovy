@@ -1,27 +1,22 @@
-
+    
 /*
- * This deletes holdings for BOKR
+ * This deletes holdings for sigel BOKR
  *
  * See LXL-2380 for more info.
  *
  */
-String SIGEL_TO_DELETE = 'BOKR'
-String BIB_ID_FILE = 'lxl-2380_bokr_hold.txt'
+String SIGEL_TO_DELETE = 'https://libris.kb.se/library/BOKR'
 
 PrintWriter failedHoldIDs = getReportWriter("failed-to-delete-holdIDs")
 PrintWriter scheduledForDeletion = getReportWriter("scheduled-for-deletion")
-File bibIDsFile = new File(scriptDir, BIB_ID_FILE)
 
-selectByIds( bibIDsFile.readLines() ) { bib ->
-    String query = "id in (select id from lddb " +
-        "where data#>>'{@graph,1,itemOf,@id}' = '${bib.graph[1][ID]}')"
-
-    selectBySqlWhere(query, silent: false) { hold ->
-        if (hold.doc.sigel == SIGEL_TO_DELETE) {
-            scheduledForDeletion.println("${hold.doc.getURI()}")
-            hold.scheduleDelete(onError: { e ->
-                failedHoldIDs.println("Failed to delete ${hold.doc.shortId} due to: $e")
-            })
-        }
-    }
+selectBySqlWhere("""
+        collection = 'hold' AND
+        data#>>'{@graph,1,heldBy,@id}' = '${SIGEL_TO_DELETE}' AND
+        modified < '2019-04-16'
+    """, silent: true) { hold ->
+    scheduledForDeletion.println("${hold.doc.getURI()}")
+    hold.scheduleDelete(onError: { e ->
+        failedHoldIDs.println("Failed to delete ${hold.doc.shortId} due to: $e")
+    })
 }
