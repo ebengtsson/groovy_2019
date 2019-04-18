@@ -2,7 +2,7 @@
 /*
  * This deletes holdings for BOKR
  *
- * See LXL-XXXX for more info.
+ * See LXL-2380 for more info.
  *
  */
 String SIGEL_TO_DELETE = 'BOKR'
