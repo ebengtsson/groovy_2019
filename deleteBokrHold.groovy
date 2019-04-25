@@ -12,6 +12,7 @@ PrintWriter scheduledForDeletion = getReportWriter("scheduled-for-deletion")
 
 selectBySqlWhere("""
         collection = 'hold' AND
+        deleted = 'false' AND
         data#>>'{@graph,1,heldBy,@id}' = '${SIGEL_TO_DELETE}' AND
         modified < '2019-04-16'
     """, silent: true) { hold ->
